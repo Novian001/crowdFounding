@@ -1,14 +1,17 @@
 package main
 
 import (
+	"gowork/handler"
 	"gowork/user"
 	"log"
 
+	
+	"github.com/gin-gonic/gin"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
 )
 
-func main()  {
+func main() {
 	dsn := "root:@tcp(localhost:3306)/db_crowdf?charset=utf8mb4&parseTime=True&loc=Local"
 	db, err := gorm.Open(mysql.Open(dsn), &gorm.Config{})
 
@@ -19,11 +22,17 @@ func main()  {
 	userRepository := user.NewRepository(db)
 	userService := user.NewService(userRepository)
 
-	userInput := user.RegisterUserInput{}
-	userInput.Name = "John Doe"
-	userInput.Email = "john@gmail.com"
-	userInput.Occupation = "Software Engineer"
-	userInput.Password = "password"
+	userHandler := handler.NewUserHandler(userService)
 
-	userService.RegisterUser(userInput)
+	router := gin.Default()
+	api := router.Group("api/v1")
+
+	api.POST("/user", userHandler.RegisterUser)
+
+	router.Run()
+
+	//input dari user
+	//handler, mapping input dari user -> struct input
+	//service : melakukan mapping dari truct input ke struct user
+	//db
 }

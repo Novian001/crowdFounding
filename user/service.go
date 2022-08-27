@@ -35,3 +35,6 @@ func (s *service) RegisterUser(input RegisterUserInput) (User, error) {
 
 	return newUser, nil
 }
+
+//mapping struct input ke struct User
+// simpan struct User melalui repository
