@@ -5,7 +5,9 @@ import (
 	"gowork/user"
 	"log"
 
-	
+	// "fmt"
+	// "net/http"
+
 	"github.com/gin-gonic/gin"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
@@ -19,6 +21,16 @@ func main() {
 		log.Fatal(err.Error())
 	}
 
+	// var address = ":9000"
+	// fmt.Printf("server started at %s\n", address)
+
+	// server := new(http.Server)
+	// server.Addr = address
+	// err := server.ListenAndServe()
+	// if err != nil {
+	// 	fmt.Println(err.Error())
+	// }
+
 	userRepository := user.NewRepository(db)
 	userService := user.NewService(userRepository)
 
@@ -28,11 +40,11 @@ func main() {
 	api := router.Group("api/v1")
 
 	api.POST("/user", userHandler.RegisterUser)
+	api.POST("/sessions", userHandler.Login)
 
 	router.Run()
-
 	//input dari user
-	//handler, mapping input dari user -> struct input
-	//service : melakukan mapping dari truct input ke struct user
-	//db
+	///handler, mapping input dari user -> struct input
+	//service : melakukan mapping dari truct input ke struct use
+	// db
 }
