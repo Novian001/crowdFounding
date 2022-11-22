@@ -1,2 +1,2 @@
 # crowdFounding
-you can see the code in another branch
+you can see the code in branch develop
